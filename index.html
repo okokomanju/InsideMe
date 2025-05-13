@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>展示会サイト</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Arial", sans-serif;
+      background: #ccf0ff;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .logo {
+      height: 80px;
+    }
+
+    .hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hero {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      color: #8dc6ff ;
+    }
+
+    .headline {
+      font-size: 2.5rem;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s forwards;
+    }
+
+    .subtext {
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s forwards 0.5s;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .characters {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      text-align: center;
+      color: #247bd3;
+      margin-top: 50px;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .slide {
+      flex: 0 0 200px;
+      margin: 0 10px;
+      transition: transform 0.5s ease;
+      opacity: 0.5;
+      transform: scale(0.8);
+      cursor: pointer;
+    }
+
+    .slide.active {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .sidebar {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background: white;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 20px;
+    }
+
+    .sidebar li {
+      margin: 20px 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #8dc6ff ;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        flex: 0 0 150px;
+      }
+
+      .headline {
+        font-size: 2rem;
+      }
+
+      .subtext {
+        font-size: 1rem;
+      }
+    }
+/* 左下の日付 */
+.date {
+  font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 30px ;
+    color: #8dc6ff ;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  </style>
+</head>
+<body>
+<!-- 今日の日付 -->
+<div class="date" id="today"></div>
+  <!-- ロゴ -->
+  <header>
+    <img src="images/logo.png" alt="ロゴ" class="logo">
+    <div class="hamburger" id="hamburger">&#9776;</div>
+  </header>
+
+  <!-- キャプション -->
+  <section class="hero">
+    <h1 class="headline">ようこそ！</h1>
+    <p class="subtext">この展示会では芸術学部の生徒のさまざまな作品、さまざまな世界を覗くことができます。</p>
+  </section>
+
+  <!-- キャラクタースライド -->
+  <section class="characters">
+    <h2>Artist</h2>
+    <div class="slider-container">
+      <div class="slider" id="slider">
+        <div class="slide"><img src="images/char1.png" alt="キャラ1"></div>
+        <div class="slide"><img src="images/char2.png" alt="キャラ2"></div>
+        <div class="slide"><img src="images/char3.png" alt="キャラ3"></div>
+        <div class="slide"><img src="images/char4.png" alt="キャラ4"></div>
+        <div class="slide"><img src="images/char5.png" alt="キャラ5"></div>
+        <div class="slide"><img src="images/char6.png" alt="キャラ6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- メニューバー -->
+  <nav class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="#">展示の詳細</a></li>
+      <li><a href="#">スケジュールとおしらせ</a></li>
+      <li><a href="#">ご連絡</a></li>
+    </ul>
+  </nav>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const hamburger = document.getElementById("hamburger");
+      const sidebar = document.getElementById("sidebar");
+
+// 日付
+const today = new Date();
+    const formattedDate = today.getFullYear() + "/" + (today.getMonth()+1) + "/" + today.getDate() ;
+    document.getElementById("today").textContent = formattedDate;
+
+      // メニュー開閉
+      hamburger.addEventListener("click", function() {
+        sidebar.classList.toggle("open");
+      });
+
+      // メニュー以外押したら閉じる
+      document.addEventListener("click", function(e) {
+        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+          sidebar.classList.remove("open");
+        }
+      });
+
+      // スライダー自動切り替え
+      const slides = document.querySelectorAll(".slide");
+      const slider = document.getElementById("slider");
+      let currentIndex = 0;
+
+      function updateSlider() {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === currentIndex);
+        });
+        const slideWidth = slides[0].offsetWidth + 20; // スライド幅+margin
+        const offset = (slider.offsetWidth - slideWidth) / 2 - slideWidth * currentIndex;
+        slider.style.transform = `translateX(${offset}px)`;
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlider();
+      }
+
+      slides.forEach((slide, index) => {
+        slide.addEventListener("click", () => {
+          window.location.href = `character${index + 1}.html`;
+        });
+      });
+
+      updateSlider();
+      setInterval(nextSlide, 10000); // 秒ごとに切り替え
+    });
+  </script>
+</body>
+</html>
