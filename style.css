@@ -1,0 +1,143 @@
+/* 基本設定 */
+body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+    background: #ccf0ff;
+    overflow-x: hidden;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .logo {
+    height: 80px;
+  }
+
+  .hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .hero {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    color: #8dc6ff ;
+  }
+
+  .headline {
+    font-size: 2.5rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s forwards;
+  }
+
+  .subtext {
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s forwards 0.5s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .characters {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    text-align: center;
+    color: #247bd3;
+    margin-top: 50px;
+  }
+
+  .slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .slide {
+    flex: 0 0 200px;
+    margin: 0 10px;
+    transition: transform 0.5s ease;
+    opacity: 0.5;
+    transform: scale(0.8);
+    cursor: pointer;
+  }
+
+  .slide.active {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  .slide img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .sidebar {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    right: 0;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 20px;
+  }
+
+  .sidebar li {
+    margin: 20px 0;
+  }
+
+  .sidebar a {
+    text-decoration: none;
+    color: #8dc6ff ;
+  }
+
+  @media (max-width: 768px) {
+    .slide {
+      flex: 0 0 150px;
+    }
+
+    .headline {
+      font-size: 2rem;
+    }
+
+    .subtext {
+      font-size: 1rem;
+    }
+  }
+/* 左下の日付 */
+.date {
+font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 30px ;
+  color: #8dc6ff ;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
